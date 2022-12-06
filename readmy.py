@@ -21,6 +21,11 @@ class Student:
         lens = int([sum(len(el) for el in self.grades.values())][0])
         return round(summ / lens, 1)
 
+    def __lt__(self, other):
+        if not isinstance(other, Student):
+            return 'Лицо не является студентом'
+        return self.__rating() < other.__rating()
+
     def __str__(self):
         res = f'Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за домашние задания: {self.__rating()} \n\
 Курсы в процессе изучения: {", ".join(self.courses_in_progress)} \nЗавершенные курсы: {",".join(self.finished_courses)}'
@@ -41,6 +46,11 @@ class Lecturer(Mentor):
         summ = int([sum(sum(el) for el in self.grades.values())][0])
         lens = int([sum(len(el) for el in self.grades.values())][0])
         return round(summ / lens, 1)
+
+    def __lt__(self, other):
+        if not isinstance(other, Lecturer):
+            return 'Лицо не является лектором'
+        return self.__rating() < other.__rating()
 
     def __str__(self):
         res = f'Имя: {self.name} \nФамилия: {self.surname} \nСредняя оценка за лекции: {self.__rating()}'
@@ -128,6 +138,10 @@ def all_rating_lec(list_lecturer, course):
 print(second_student)
 print(first_lecturer)
 print(second_reviewer)
+print(first_student > second_student)
+print(second_student > first_student)
+print(first_lecturer > second_lecturer)
+print(second_lecturer > first_lecturer)
 
 print(all_rating_hw(list_st, 'Python'))
 print(all_rating_lec(list_lec, 'Python'))
